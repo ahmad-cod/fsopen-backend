@@ -25,7 +25,12 @@ const contactSchema = new mongoose.Schema({
 })
 
 const Contact = mongoose.model('Contact', contactSchema)
-
+if(process.argv.length === 3) {
+    return Contact.find({}).then(res => {
+        res.forEach(contact => console.log(contact))
+        mongoose.connection.close()
+    })
+}
 const contact = new Contact({
     name: process.argv[3],
     number: process.argv[4]
