@@ -7,7 +7,7 @@ if(process.argv.length < 3) {
 }
 
 const password = process.argv[2];
-const url = `mongodb+srv://ahmad:${password}@cluster0.cxs4b.mongodb.net/phonebook?retryWrites=true&w=majority`;
+const url = process.env.MONGODB_URI;
 
 mongoose.connect(url, {
     useCreateIndex: true,
@@ -25,12 +25,12 @@ const contactSchema = new mongoose.Schema({
 })
 
 const Contact = mongoose.model('Contact', contactSchema)
-if(process.argv.length === 3) {
-    return Contact.find({}).then(res => {
-        res.forEach(contact => console.log(contact))
-        mongoose.connection.close()
-    })
-}
+// if(process.argv.length === 3) {
+//     return Contact.find({}).then(res => {
+//         res.forEach(contact => console.log(contact))
+//         mongoose.connection.close()
+//     })
+// }
 const contact = new Contact({
     name: process.argv[3],
     number: process.argv[4]
