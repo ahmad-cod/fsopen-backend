@@ -46,7 +46,7 @@ app.get('/api/persons/:id', (request, response) => {
     if(!contact) {
      response.status(400).send(`contact with id ${id} doesn't exist`)
     }
-    response.send(contact)
+    response.json(contact)
 })
 app.delete('/api/persons/:id', (req, res) => {
   const id = Number(req.params.id);
@@ -61,7 +61,7 @@ app.post('/api/persons/', (request, response) => {
   const sameContact = persons.find(contact => contact.name == name);
   console.log(sameContact)
   if(sameContact){
-    response.status(400).send({ error: 'name must be unique' })
+    response.status(400).json({ error: 'name must be unique' })
   }
     let id = Math.floor(Math.random() * 200);
     if(id < 5) {
@@ -72,10 +72,9 @@ app.post('/api/persons/', (request, response) => {
       number: request.body.number,
       id
     }
-    console.log(newContact)
-
+    contacts = contacts.concat(newContact)
     
-    response.send(newContact)
+    response.json(newContact)
 })
 
 const PORT = process.env.PORT || 3001;
